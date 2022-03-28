@@ -32,21 +32,25 @@ class AppFixtures extends Fixture
     {
         $admin = new User();
         $admin->setEmail('admin@curso.local');
+        $admin->setRoles(['ROLE_ADMIN']);
         $hash = $this->passwordHasher->hashPassword($admin, 'admin');
         $admin->setPassword($hash);
 
         $comercial = new User();
         $comercial->setEmail('comercial@curso.local');
+        $comercial->setRoles(['ROLE_COMERCIAL']);
         $hash = $this->passwordHasher->hashPassword($comercial, 'comercial');
         $comercial->setPassword($hash);
 
         $jefeproyecto = new User();
         $jefeproyecto->setEmail('jefeproyecto@curso.local');
+        $jefeproyecto->setRoles(['ROLE_JEFE_PROYECTO']);
         $hash = $this->passwordHasher->hashPassword($jefeproyecto, 'jefeproyecto');
         $jefeproyecto->setPassword($hash);
 
         $empleado = new User();
         $empleado->setEmail('empleado@curso.local');
+        $empleado->setRoles(['ROLE_EMPLEADO']);
         $hash = $this->passwordHasher->hashPassword($empleado, 'empleado');
         $empleado->setPassword($hash);
 

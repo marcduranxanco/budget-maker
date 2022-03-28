@@ -44,7 +44,7 @@ class AppFixtures extends Fixture
 
         $jefeproyecto = new User();
         $jefeproyecto->setEmail('jefeproyecto@curso.local');
-        $jefeproyecto->setRoles(['ROLE_JEFE_PROYECTO']);
+        $jefeproyecto->setRoles(['ROLE_JEFEPROYECTO']);
         $hash = $this->passwordHasher->hashPassword($jefeproyecto, 'jefeproyecto');
         $jefeproyecto->setPassword($hash);
 

@@ -1,3 +1,6 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+
+dashboard_admin:
+  path: /dashboard/{role}
+  controller: App\Controller\Dashboard\DashboardController::index
+  requirements:
+    role: admin|comercial|jefeproyecto|empleado

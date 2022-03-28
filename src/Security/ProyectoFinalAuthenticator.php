@@ -91,8 +91,16 @@ class ProyectoFinalAuthenticator extends AbstractFormLoginAuthenticator implemen
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
+        $listRoles = ['ROLE_ADMIN', 'ROLE_COMERCIAL', 'ROLE_JEFEPROYECTO', 'ROLE_EMPLEADO'];
+        foreach ($listRoles as $role){
+            if(in_array($role, $token->getUser()->getRoles()))
+            {
+                return new RedirectResponse(
+                    $this->urlGenerator->generate('dashboard', [
+                        'role' => strtolower(explode("_", $role)[1])
+                    ])
+                );
+            }
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));

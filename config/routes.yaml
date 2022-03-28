@@ -4,3 +4,6 @@ dashboard_admin:
   controller: App\Controller\Dashboard\DashboardController::index
   requirements:
     role: admin|comercial|jefeproyecto|empleado
+
+app_logout:
+  path: /logout

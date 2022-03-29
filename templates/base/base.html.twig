@@ -14,6 +14,8 @@
         {% endblock %}
     </head>
     <body>
+        {% block header %} {{ include('base/common-elements/header.html.twig') }} {% endblock %}
+        {% block navbar %} {{ include('base/common-elements/navbar.html.twig') }} {% endblock %}
         {% block body %}{% endblock %}
     </body>
 </html>

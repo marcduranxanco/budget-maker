@@ -1,4 +1,10 @@
 
+index:
+  path: /
+  controller: App\Controller\IndexController::index
+  requirements:
+    role: admin|comercial|jefeproyecto|empleado
+
 dashboard:
   path: /dashboard/{role}
   controller: App\Controller\Dashboard\DashboardController::index

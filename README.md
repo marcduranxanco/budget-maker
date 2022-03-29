@@ -6,8 +6,8 @@
   - `php bin/console make:user`
   - `php bin/console make:auth`
 - En relación a los tests:
-  - Se ha creado solamente un test unitario para `App\Event\PresupuestoSolicitadoEvent;`. No he sabido hacer tests unitarios sobre los controladores.
-  - 
+  - Se ha creado solamente un test unitario para `App\Event\PresupuestoSolicitadoEvent;`.
+  - Se ha creado un test funcional para `App\Controller\Dashboard\DashboardController`
 
 ### Comandos necesarios para levantar esta actividad
 

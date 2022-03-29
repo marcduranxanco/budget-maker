@@ -11,6 +11,7 @@
 docker-compose up --build
 bin/console doctrine:schema:update --force
 bin/console doctrine:fixtures:load
+./node_modules/.bin/encore dev
 ```
 
 # Comandos útiles para el proyecto

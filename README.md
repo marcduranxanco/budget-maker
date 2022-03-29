@@ -2,16 +2,24 @@
 
 ## Notas actividad 15.2
 - Se ha modificado el docker-compose para levantar una base de datos mysql 5.7 para guardar los usuarios. Mapea un volumen de datos en /docker/data. Son necesarios los datos en el .env para iniciarlo.
-- Método para inicializar la seguridad del proyecto:
+- Método utilizado para inicializar la seguridad del proyecto:
   - `php bin/console make:user`
   - `php bin/console make:auth`
 
 ### Comandos necesarios para levantar esta actividad
 ```
+# Ejecutar contenedor con la base de datos 
 docker-compose up --build
+
+# Inicializar los datos de la base de datos
 bin/console doctrine:schema:update --force
 bin/console doctrine:fixtures:load
+
+# Ejecutar el build de los estilos y Js de la aplicación
 ./node_modules/.bin/encore dev
+
+# Ejecución de tests
+./vendor/bin/simple-phpunit
 ```
 
 # Comandos útiles para el proyecto

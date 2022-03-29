@@ -5,19 +5,26 @@
 - Método utilizado para inicializar la seguridad del proyecto:
   - `php bin/console make:user`
   - `php bin/console make:auth`
+- En relación a los tests:
+  - Se ha creado solamente un test unitario para `App\Event\PresupuestoSolicitadoEvent;`. No he sabido hacer tests unitarios sobre los controladores.
+  - 
 
 ### Comandos necesarios para levantar esta actividad
+
 ```
 # Ejecutar contenedor con la base de datos 
 docker-compose up --build
-
+```
+```
 # Inicializar los datos de la base de datos
 bin/console doctrine:schema:update --force
 bin/console doctrine:fixtures:load
-
+```
+```
 # Ejecutar el build de los estilos y Js de la aplicación
 ./node_modules/.bin/encore dev
-
+```
+```
 # Ejecución de tests
 ./vendor/bin/simple-phpunit
 ```

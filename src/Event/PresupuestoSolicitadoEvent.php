@@ -2,6 +2,8 @@
 
 namespace App\Event;
 
+use App\Presupuesto\SolicitudPresupuesto;
+
 class PresupuestoSolicitadoEvent extends PresupuestoEvent
 {
     public const NAME = 'presupuesto.solicitado';

@@ -1,6 +1,9 @@
 # NOTAS SOBRE LAS ACTIVIDADES
 
-## Notas actividad 16.1
+## Notas sobre la actividad
+Se puede ver el diagrama de la base de datos en [este dbdiagram.io](https://dbdiagram.io/embed/6244bb98bed61838732bd776)
+
+## Enunciado actividad 16.1
 - Al mandar una solicitud:
   - Se enviará un correo al usuario con la misma información: características de la(s) aplicación(es), presupuesto aproximado y texto que deje claro que es un presupuesto orientativo.
   - Se enviará otro correo a todos los usuarios con rol "comercial" indicando los datos de contacto del solicitante, las características de la(s) aplicación(es) y el presupuesto orientativo.
@@ -29,6 +32,7 @@ Nota:
 ```
 # Ejecuta el contenedor con la base de datos
 docker-compose up --build -d && sleep 5 && \
+bin/console doctrine:migrations:migrate && \
 bin/console doctrine:schema:update --force && \
 bin/console doctrine:fixtures:load --no-interaction && \
 ./node_modules/.bin/encore dev
@@ -41,3 +45,5 @@ bin/console doctrine:fixtures:load --no-interaction && \
   - `php -S 127.0.0.1:8000 -t public`
 - Ejecución de tests
   - `./vendor/bin/simple-phpunit`
+- Compilar assets y re-compilarlos automáticamente cuando cambian los archivos
+  - `npm run watch`

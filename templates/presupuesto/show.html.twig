@@ -1,0 +1,32 @@
+{% extends 'base/base.html.twig' %}
+
+{% block body %}
+    <h1>Presupuesto</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ presupuesto.id }}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{{ presupuesto.tipo }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ presupuesto.estado }}</td>
+            </tr>
+            <tr>
+                <th>Precio_final</th>
+                <td>{{ presupuesto.precioFinal }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_presupuesto_index') }}">back to list</a>
+
+    <a href="{{ path('app_presupuesto_edit', {'id': presupuesto.id}) }}">edit</a>
+
+    {{ include('presupuesto/_delete_form.html.twig') }}
+{% endblock %}

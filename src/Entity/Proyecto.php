@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Proyecto
 {
+    public const PROYECTO_STATE = [
+        'Enproceso' => 'enproceso',
+        'Aprobado' => 'aprobado',
+        'Terminado' => 'terminado'
+    ];
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -43,6 +50,7 @@ class Proyecto
     public function __construct()
     {
         $this->tareas = new ArrayCollection();
+        $this->estado = self::PROYECTO_STATE['Enproceso'];
     }
 
     public function getId(): ?int
@@ -64,12 +72,14 @@ class Proyecto
 
     public function getEstado(): ?string
     {
-        //TODO: hacer el set solo si existe en los estados aceptados
         return $this->estado;
     }
 
     public function setEstado(string $estado): self
     {
+        if(!in_array($estado, $this::PROYECTO_STATE)){
+            throw new Exception('Tipo de presupuesto no válido: '.$estado);
+        };
         $this->estado = $estado;
 
         return $this;
@@ -115,5 +125,10 @@ class Proyecto
         }
 
         return $this;
+    }
+
+    public function __toString(): ?string
+    {
+        return $this->getId();
     }
 }

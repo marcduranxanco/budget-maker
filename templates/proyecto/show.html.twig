@@ -1,0 +1,28 @@
+{% extends 'base/base.html.twig' %}
+
+{% block body %}
+    <h1>Proyecto</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ proyecto.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_entrega</th>
+                <td>{{ proyecto.fechaEntrega ? proyecto.fechaEntrega|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ proyecto.estado }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_proyecto_index') }}">back to list</a>
+
+    <a href="{{ path('app_proyecto_edit', {'id': proyecto.id}) }}">edit</a>
+
+    {{ include('proyecto/_delete_form.html.twig') }}
+{% endblock %}

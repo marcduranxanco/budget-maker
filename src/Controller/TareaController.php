@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tarea;
 use App\Form\TareaType;
 use App\Repository\TareaRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/tarea")
+ * @Security("is_granted('ROLE_EMPLEADO', 'ROLE_JEFEPROYECTO')")
  */
 class TareaController extends AbstractController
 {

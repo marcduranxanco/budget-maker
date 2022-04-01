@@ -13,6 +13,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    public const ROLES = [
+        'Admin' => 'ROLE_ADMIN',
+        'Comercial' => 'ROLE_COMERCIAL',
+        'Jefeproyecto' => 'ROLE_JEFEPROYECTO',
+        'empleado' => 'ROLE_EMPLEADO'
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

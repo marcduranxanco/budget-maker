@@ -10,6 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Tarea
 {
+    public const TAREA_STATE = [
+        'Noasignada' => 'noasignada',
+        'Asignada' => 'asignada',
+        'Terminada' => 'terminada'
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -38,6 +44,11 @@ class Tarea
      */
     private $proyecto;
 
+    public function __construct()
+    {
+        $this->estado = self::TAREA_STATE['Noasignada'];
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,12 +56,14 @@ class Tarea
 
     public function getEstado(): ?string
     {
-        // TODO: añadir estado solo está en los disponibles
         return $this->estado;
     }
 
     public function setEstado(string $estado): self
     {
+        if(!in_array($estado, $this::TAREA_STATE)){
+            throw new Exception('Tipo de presupuesto no válido: '.$estado);
+        };
         $this->estado = $estado;
 
         return $this;

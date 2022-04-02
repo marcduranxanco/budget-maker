@@ -4,9 +4,9 @@
 Se puede ver el diagrama de la base de datos en [este dbdiagram.io](https://dbdiagram.io/embed/6244bb98bed61838732bd776)
 
 ## Enunciado actividad 16.1
-- Al mandar una solicitud:
-  - Se enviará un correo al usuario con la misma información: características de la(s) aplicación(es), presupuesto aproximado y texto que deje claro que es un presupuesto orientativo.
-  - Se enviará otro correo a todos los usuarios con rol "comercial" indicando los datos de contacto del solicitante, las características de la(s) aplicación(es) y el presupuesto orientativo.
+-✅ Al mandar una solicitud:
+  - ✅ Se enviará un correo al usuario con la misma información: características de la(s) aplicación(es), presupuesto aproximado y texto que deje claro que es un presupuesto orientativo.
+  - ✅ Se enviará otro correo a todos los usuarios con rol "comercial" indicando los datos de contacto del solicitante, las características de la(s) aplicación(es) y el presupuesto orientativo.
 - Al aprobar una solicitud de presupuesto:
   - Se mandarán correos al solicitante:
     - En el correo al solicitante se indicarán las características de la solicitud y el presupuesto final en vez del presupuesto inicial. También se añadirá en el correo un enlace. (Ver sección: panel del solicitante)

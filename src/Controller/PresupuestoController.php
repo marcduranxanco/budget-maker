@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Presupuesto;
-use App\Event\PresupuestoAprobadoEvent;
-use App\Event\PresupuestoSolicitadoEvent;
+use App\Event\Presupuesto\PresupuestoAprobadoEvent;
+use App\Event\Presupuesto\PresupuestoSolicitadoEvent;
+use App\EventSubscriber\PresupuestoEventSubscriber;
 use App\Form\PresupuestoType;
 use App\Repository\PresupuestoRepository;
+use App\Services\EmailService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +21,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PresupuestoController extends AbstractController
 {
+    private EventDispatcherInterface $eventDispatcher;
+    private EmailService $emailService;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher, EmailService $emailService)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+        $this->emailService = $emailService;
+    }
+
+
     /**
      * @Route("/", name="app_presupuesto_index", methods={"GET"})
      * @Security("is_granted('ROLE_COMERCIAL')")
@@ -41,7 +53,12 @@ class PresupuestoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $presupuestoRepository->add($presupuesto);
-            return $this->redirectToRoute('app_presupuesto_index', [], Response::HTTP_SEE_OTHER);
+
+            $event = new PresupuestoSolicitadoEvent($presupuesto);
+            $this->eventDispatcher->addSubscriber(new PresupuestoEventSubscriber($this->emailService));
+            $this->eventDispatcher->dispatch($event, PresupuestoSolicitadoEvent::NAME);
+
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('presupuesto/new.html.twig', [
@@ -72,6 +89,14 @@ class PresupuestoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $presupuestoRepository->add($presupuesto);
+
+            if($presupuesto->getEstado() === Presupuesto::PRESUPUESTO_STATES['Aprobado'])
+            {
+                $event = new PresupuestoAprobadoEvent($presupuesto);
+                $this->eventDispatcher->addSubscriber(new PresupuestoEventSubscriber($this->emailService));
+                $this->eventDispatcher->dispatch($event, PresupuestoAprobadoEvent::NAME);
+            }
+
             return $this->redirectToRoute('app_presupuesto_index', [], Response::HTTP_SEE_OTHER);
         }
 

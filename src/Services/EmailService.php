@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entity\Presupuesto;
+use App\Entity\Proyecto;
 
 /**
  * Servicio de gestión del envío de correos
@@ -82,6 +83,25 @@ class EmailService
      */
     public function enviarCorreosTareaAsignadaTecnico(Tarea $tarea, Usuario $tecnico): bool
     {
+        return true;
+    }
+
+    public function enviarCorreosCambioEstadoProyecto(Proyecto $proyecto): bool
+    {
+        $this->enviarCorreosCambioEstadoProyectoJefesProyecto($proyecto);
+        $this->enviarCorreosCambioEstadoProyectoClientes($proyecto);
+        return true;
+    }
+
+    private function enviarCorreosCambioEstadoProyectoJefesProyecto(Proyecto $proyecto): bool
+    {
+        dump('envia correo a jefes proyecto');
+        return true;
+    }
+
+    private function enviarCorreosCambioEstadoProyectoClientes(Proyecto $proyecto): bool
+    {
+        dump('envia correo al cliente');
         return true;
     }
 }

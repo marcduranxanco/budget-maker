@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Proyecto;
+use App\Event\Proyecto\ProyectoEvent;
+use App\EventSubscriber\ProyectoEventSubscriber;
 use App\Form\ProyectoType;
 use App\Repository\ProyectoRepository;
+use App\Services\EmailService;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +21,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProyectoController extends AbstractController
 {
+    private EventDispatcherInterface $eventDispatcher;
+    private EmailService $emailService;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher, EmailService $emailService)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+        $this->emailService = $emailService;
+    }
+
+
     /**
      * @Route("/", name="app_proyecto_index", methods={"GET"})
      */
@@ -62,11 +76,20 @@ class ProyectoController extends AbstractController
      */
     public function edit(Request $request, Proyecto $proyecto, ProyectoRepository $proyectoRepository): Response
     {
+        $oldEstado = $proyecto->getEstado();
         $form = $this->createForm(ProyectoType::class, $proyecto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $proyectoRepository->add($proyecto);
+
+            if($oldEstado !== $proyecto->getEstado())
+            {
+                $event = new ProyectoEvent($proyecto);
+                $this->eventDispatcher->addSubscriber(new ProyectoEventSubscriber($this->emailService));
+                $this->eventDispatcher->dispatch($event, ProyectoEvent::NAME_CAMBIO_ESTADO);
+            }
+
             return $this->redirectToRoute('app_proyecto_index', [], Response::HTTP_SEE_OTHER);
         }
 

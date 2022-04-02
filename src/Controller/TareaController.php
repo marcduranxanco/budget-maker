@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Tarea;
+use App\Event\Tarea\TareaEvent;
+use App\EventSubscriber\TareaEventSubscriber;
 use App\Form\TareaType;
 use App\Repository\TareaRepository;
+use App\Services\EmailService;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +21,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TareaController extends AbstractController
 {
+    private EventDispatcherInterface $eventDispatcher;
+    private EmailService $emailService;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher, EmailService $emailService)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+        $this->emailService = $emailService;
+    }
+
     /**
      * @Route("/", name="app_tarea_index", methods={"GET"})
      */
@@ -38,6 +51,7 @@ class TareaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $tareaRepository->add($tarea);
+            $this->dispatchEvents($tarea);
             return $this->redirectToRoute('app_tarea_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,6 +81,7 @@ class TareaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $tareaRepository->add($tarea);
+            $this->dispatchEvents($tarea);
             return $this->redirectToRoute('app_tarea_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -86,5 +101,17 @@ class TareaController extends AbstractController
         }
 
         return $this->redirectToRoute('app_tarea_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function dispatchEvents(Tarea $tarea): void
+    {
+        $event = new TareaEvent($tarea);
+        $this->eventDispatcher->addSubscriber(new TareaEventSubscriber($this->emailService));
+        if(null !== $tarea->getUser()){
+            $this->eventDispatcher->dispatch($event, TareaEvent::ASIGNAR_TECNICO);
+        }
+        if($tarea->getEstado() == Tarea::TAREA_STATE['Terminada']){
+            $this->eventDispatcher->dispatch($event, TareaEvent::TAREA_TERMINADA);
+        }
     }
 }

@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Entity\Presupuesto;
 use App\Entity\Proyecto;
+use App\Entity\Tarea;
+use App\Entity\User;
 
 /**
  * Servicio de gestión del envío de correos
@@ -75,17 +77,6 @@ class EmailService
         return true;
     }
 
-    /**
-     * Envía un correo a un ténico cuando se le asigna una tarea
-     * @param Tarea $tarea
-     * @param Usuario $tecnico
-     * @return bool true cuando el correo ha sido enviado
-     */
-    public function enviarCorreosTareaAsignadaTecnico(Tarea $tarea, Usuario $tecnico): bool
-    {
-        return true;
-    }
-
     public function enviarCorreosCambioEstadoProyecto(Proyecto $proyecto): bool
     {
         $this->enviarCorreosCambioEstadoProyectoJefesProyecto($proyecto);
@@ -102,6 +93,24 @@ class EmailService
     private function enviarCorreosCambioEstadoProyectoClientes(Proyecto $proyecto): bool
     {
         dump('envia correo al cliente');
+        return true;
+    }
+
+    /**
+     * Envía un correo a un ténico cuando se le asigna una tarea
+     * @param Tarea $tarea
+     * @param User $user
+     * @return bool true cuando el correo ha sido enviado
+     */
+    public function enviarCorreosTareaAsignadaTecnico(Tarea $tarea, User $user): bool
+    {
+        dump("envia correo al técnico asignado");
+        return true;
+    }
+
+    public function enviarCorreosTareaTerminada(Tarea $tarea): bool
+    {
+        dump("envia correo a jefe de proyecto");
         return true;
     }
 }

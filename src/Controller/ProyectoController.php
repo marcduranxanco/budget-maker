@@ -30,7 +30,6 @@ class ProyectoController extends AbstractController
         $this->emailService = $emailService;
     }
 
-
     /**
      * @Route("/", name="app_proyecto_index", methods={"GET"})
      */

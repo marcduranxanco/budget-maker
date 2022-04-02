@@ -16,12 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/presupuesto")
- * @Security("is_granted('ROLE_COMERCIAL')")
  */
 class PresupuestoController extends AbstractController
 {
     /**
      * @Route("/", name="app_presupuesto_index", methods={"GET"})
+     * @Security("is_granted('ROLE_COMERCIAL')")
      */
     public function index(PresupuestoRepository $presupuestoRepository): Response
     {
@@ -52,6 +52,7 @@ class PresupuestoController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_presupuesto_show", methods={"GET"})
+     * @Security("is_granted('ROLE_COMERCIAL')")
      */
     public function show(Presupuesto $presupuesto): Response
     {
@@ -62,6 +63,7 @@ class PresupuestoController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_presupuesto_edit", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_COMERCIAL')")
      */
     public function edit(Request $request, Presupuesto $presupuesto, PresupuestoRepository $presupuestoRepository): Response
     {
@@ -81,6 +83,7 @@ class PresupuestoController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_presupuesto_delete", methods={"POST"})
+     * @Security("is_granted('ROLE_COMERCIAL')")
      */
     public function delete(Request $request, Presupuesto $presupuesto, PresupuestoRepository $presupuestoRepository): Response
     {

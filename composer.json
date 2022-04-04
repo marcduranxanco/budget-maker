@@ -11,6 +11,7 @@
         "doctrine/orm": "^2.11",
         "laminas/laminas-zendframework-bridge": "^1.5",
         "phpdocumentor/reflection-docblock": "^5.3",
+        "scienta/doctrine-json-functions": "^5.0",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "5.4.*",
         "symfony/console": "5.4.*",

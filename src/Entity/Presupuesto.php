@@ -18,7 +18,7 @@ class Presupuesto
 
     public const PRESUPUESTO_STATES = [
         'Pendiente' => 'pendiente',
-        'Aprobado' => 'aprovado',
+        'Aprobado' => 'aprobado',
         'Rechazado' => 'rechazado'
     ];
 

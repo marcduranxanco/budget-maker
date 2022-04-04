@@ -6,12 +6,42 @@ use App\Entity\Presupuesto;
 use App\Entity\Proyecto;
 use App\Entity\Tarea;
 use App\Entity\User;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  * Servicio de gestión del envío de correos
  */
 class EmailService
 {
+    private MailerInterface $mailer;
+    private string $mailerFrom;
+    private UserRepository $userRepository;
+
+    public function __construct(MailerInterface $mailer, string $mailerFrom, EntityManagerInterface $em)
+    {
+        $this->mailer = $mailer;
+        $this->mailerFrom = $mailerFrom;
+        $this->userRepository = $em->getRepository(User::class);
+    }
+
+    public function sendEmail(array $mailTo, string $subject, string $body): void
+    {
+        $email = (new Email())
+            ->from($this->mailerFrom)
+            ->subject($subject)
+            ->html($body);
+
+        /** @var User $receiver */
+        foreach($mailTo as $receiver){
+            $email->addTo($receiver->getEmail());
+        }
+
+        $this->mailer->send($email);
+    }
+
     /**
      * Envia los correos cuando hay una nueva solicitud de presupuesto
      * @param Presupuesto $presupuesto
@@ -19,39 +49,62 @@ class EmailService
      */
     public function enviarCorreosSolicitudPresupuesto(Presupuesto $presupuesto): bool
     {
-        $this->enviarCorreosSolicitudPresupuestoASolicitante($presupuesto);
-        $this->enviarCorreosSolicitudPresupuestoAComerciales($presupuesto);
-        return true;
+        try{
+            $this->enviarCorreosSolicitudPresupuestoASolicitante($presupuesto);
+            $this->enviarCorreosSolicitudPresupuestoAComerciales($presupuesto);
+            return true;
+        }
+        catch (Exception $e){
+            return false;
+        }
     }
 
-    /**
-     * Envía un correo a los comerciales con la información de la nueva solicitud
-     * Devuelve true si todo ha ido bien o false si no se ha podido enviar el correo
-     */
-    private function enviarCorreosSolicitudPresupuestoAComerciales(Presupuesto $presupuesto): bool
+    private function enviarCorreosSolicitudPresupuestoAComerciales(Presupuesto $presupuesto): void
     {
-        dump('Se envía el correo a los comerciales');
-        return true;
+        $subject = 'Nuevo presupuesto creado '. $presupuesto->getId();
+        $body = 'Se ha creado un nuevo presupuesto: '.$presupuesto->getId().'. Contacto: '.$presupuesto->getUser()->getEmail();
+
+        $comerciales = $this->userRepository->findByRole(User::ROLES['Comercial']);
+
+        $this->sendEmail($comerciales, $subject, $body);
     }
 
-    /**
-     * Envía un correo al solicitante del presupuesto indicando que se ha recibido la solicitud
-     * Devuelve true si todo ha ido bien o false si no se ha podido enviar el correo
-     */
-    private function enviarCorreosSolicitudPresupuestoASolicitante(Presupuesto $presupuesto): bool
+    private function enviarCorreosSolicitudPresupuestoASolicitante(Presupuesto $presupuesto): void
     {
-        dump('Se envía el correo al solicitante');
-        return true;
+        $subject = 'Confirmación del presupuesto '. $presupuesto->getId();
+        $body = 'Le confirmamos que su presupuesto con id '.$presupuesto->getId().' se ha procesado correctamente.';
+        $this->sendEmail([$presupuesto->getUser()], $subject, $body);
     }
 
     /**
-     * Informa al solicitante que el presupuesto ha sido aprovado
+     * Informa a los implicados que el presupuesto ha sido aprobado
      */
     public function enviarCorreosPresupuestoAprobado(Presupuesto $presupuesto): bool
     {
-        dump('Se envía el correo al solicitante informando presupuesto aprobado');
-        dump('Se envía el correo a los jefes de proyecto');
-        return true;
+        try{
+            $this->enviarCorreoPresupuestoAprobadoSolicitante($presupuesto);
+            $this->enviarCorreoPresupuestoAprobadoJefeDeProyecto($presupuesto);
+            return true;
+        }
+        catch (Exception $e){
+            return false;
+        }
+    }
+
+    private function enviarCorreoPresupuestoAprobadoSolicitante(Presupuesto $presupuesto)
+    {
+        $subject = 'Su presupuesto ha cambiado de estado!';
+        $body = 'Le informamos que su presupuesto con id '.$presupuesto->getId().' ha cambiado de estado a '.$presupuesto->getEstado();
+        $this->sendEmail($presupuesto->getUser(), $subject, $body);
+    }
+
+    private function enviarCorreoPresupuestoAprobadoJefeDeProyecto(Presupuesto $presupuesto)
+    {
+        $subject = 'El presupuesto '.$presupuesto->getId().' ha sido aprobado';
+        $body = 'Le informamos que su presupuesto con id '.$presupuesto->getId().' ha cambiado de estado a '.$presupuesto->getEstado();
+        $jefesProyecto = $this->userRepository->findByRole(User::ROLES['Comercial']);
+
+        $this->sendEmail($jefesProyecto, $subject, $body);
     }
 
     /**
@@ -62,7 +115,15 @@ class EmailService
      */
     public function enviarCorreosSolicitudCambioDeEstado(Presupuesto $presupuesto): bool
     {
-        dump('Se envía el correo al solicitante informando el cmabio de estado');
+        /** TODO: envía el correo al solicitante informando el cambio de estado; */
+        try{
+            $this->enviarCorreoPresupuestoAprobadoSolicitante($presupuesto);
+            return true;
+        }
+        catch (Exception $e){
+            return false;
+        }
+
         return true;
     }
 
@@ -73,44 +134,46 @@ class EmailService
      */
     public function enviarCorreosPresupuestoCamioDeEstado(Presupuesto $presupuesto): bool
     {
-        dump('Se envía el correo al solicitante informando el cmabio de estado');
+        /** TODO: Se envía el correo al solicitante informando el cmabio de estado */
         return true;
     }
 
     public function enviarCorreosCambioEstadoProyecto(Proyecto $proyecto): bool
     {
-        $this->enviarCorreosCambioEstadoProyectoJefesProyecto($proyecto);
-        $this->enviarCorreosCambioEstadoProyectoClientes($proyecto);
-        return true;
+        try{
+            $this->enviarCorreosCambioEstadoProyectoJefesProyecto($proyecto);
+            $this->enviarCorreosCambioEstadoProyectoClientes($proyecto);
+            return true;
+        }
+        catch (Exception $e){
+            return true;
+        }
     }
 
     private function enviarCorreosCambioEstadoProyectoJefesProyecto(Proyecto $proyecto): bool
     {
-        dump('envia correo a jefes proyecto');
+        /** TODO: Se envía el a los jefes de proyecto informando del cambio de estado del proyecto */
         return true;
     }
 
     private function enviarCorreosCambioEstadoProyectoClientes(Proyecto $proyecto): bool
     {
-        dump('envia correo al cliente');
+        /** TODO: Se envía el a los clientes informando del cambio de estado del proyecto */
         return true;
     }
 
     /**
      * Envía un correo a un ténico cuando se le asigna una tarea
-     * @param Tarea $tarea
-     * @param User $user
-     * @return bool true cuando el correo ha sido enviado
      */
     public function enviarCorreosTareaAsignadaTecnico(Tarea $tarea, User $user): bool
     {
-        dump("envia correo al técnico asignado");
+        /** TODO: Envía un correo a un ténico cuando se le asigna una tarea */
         return true;
     }
 
     public function enviarCorreosTareaTerminada(Tarea $tarea): bool
     {
-        dump("envia correo a jefe de proyecto");
+        /** TODO: Envía un correo a un jefe de proyecto cuando se le asigna una tarea */
         return true;
     }
 }

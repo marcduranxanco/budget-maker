@@ -1,2 +1,65 @@
 framework:
-    workflows: null
+    workflows:
+        estados_presupuesto:
+            type: 'workflow'
+            marking_store:
+                type: 'single_state'
+                arguments:
+                    - 'estado'
+                supports:
+                    - App\Entity\Presupuesto
+                places:
+                    - pendiente
+                    - aprobado
+                    - rechazado
+                initial_place: pendiente
+                transitions:
+                    aprobar:
+                        from: pendiente
+                        to: aprobado
+                    rechazar:
+                        from: pendiente
+                        to: rechazado
+        estados_proyecto:
+            type: 'workflow'
+            marking_store:
+                type: 'single_state'
+                arguments:
+                    - 'estado'
+                supports:
+                    - App\Entity\Proyecto
+                places:
+                    - aprobado
+                    - enproceso
+                    - terminado
+                initial_place: aprobado
+                transitions:
+                    iniciar:
+                        from: aprobado
+                        to: enproceso
+                    terminar:
+                        from: enproceso
+                        to: terminado
+        estados_tarea:
+            type: 'workflow'
+            marking_store:
+                type: 'single_state'
+                arguments:
+                    - 'estado'
+                supports:
+                    - App\Entity\Tarea
+                places:
+                    - sinasignar
+                    - asignada
+                    - terminada
+                initial_place: sinasignar
+                transitions:
+                    asignar:
+                        from: sinasignar
+                        to: asignada
+                    terminar:
+                        from: asignada
+                        to: terminada
+                    reasignar:
+                        from: terminada
+                        to: asignada

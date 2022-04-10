@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Proyecto;
+use App\Entity\Tarea;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -43,6 +44,19 @@ class ProyectoRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function getTareasPendientes(Proyecto $entity): array
+    {
+        $res = $this->createQueryBuilder('p')
+            ->leftJoin('p.tareas', 't')
+            ->where('p.id = :id')
+            ->setParameter(':id', $entity->getId())
+            ->andWhere('t.estado != :state')
+            ->setParameter(':state', Tarea::TAREA_STATE['Terminada'])
+            ->getQuery()
+            ->getResult();
+        return $res;
     }
 
     // /**

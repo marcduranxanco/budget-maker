@@ -65,3 +65,10 @@ table a {
     position: relative;
 }
 /* END DATA STYLES */
+
+.flash-error {
+    background-color: #B0413E;
+    color: white;
+    padding: 3px 0px;
+    margin: 6px 0px;
+}

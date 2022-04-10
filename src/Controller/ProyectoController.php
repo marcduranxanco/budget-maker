@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Proyecto;
+use App\Entity\Tarea;
 use App\Event\Proyecto\ProyectoEvent;
 use App\EventSubscriber\ProyectoEventSubscriber;
 use App\Form\ProyectoType;
@@ -80,6 +81,18 @@ class ProyectoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if(
+                $proyecto->getEstado() == Proyecto::PROYECTO_STATE['Terminado'] &&
+                !$this->canCloseProject($proyecto, $proyectoRepository)
+            ){
+                $this->addFlash('error', 'Este proyecto tiene tareas incompletas y no se puede cerrar todavía');
+                return $this->renderForm('proyecto/edit.html.twig', [
+                    'proyecto' => $proyecto,
+                    'form' => $form,
+                ]);
+            };
+
             $proyectoRepository->add($proyecto);
 
             if($oldEstado !== $proyecto->getEstado())
@@ -108,5 +121,20 @@ class ProyectoController extends AbstractController
         }
 
         return $this->redirectToRoute('app_proyecto_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function canCloseProject(Proyecto $proyecto, ProyectoRepository $proyectoRepository)
+    {
+        $tareasPendientes = $proyectoRepository->getTareasPendientes($proyecto);
+
+        foreach ($tareasPendientes as $value) {
+            foreach ($value->getTareas() as $tarea) {
+                if($tarea->getEstado() != Tarea::TAREA_STATE['Terminada']){
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

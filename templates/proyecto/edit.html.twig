@@ -3,6 +3,14 @@
 {% block body %}
     <h1>Edit Proyecto</h1>
 
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     {{ include('proyecto/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('app_proyecto_index') }}">back to list</a>

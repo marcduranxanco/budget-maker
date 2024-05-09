@@ -7,10 +7,33 @@ services:
     ports:
       - "${MYSQL_PORT}:3306"
     environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - ./docker/mysql/scripts/:/docker-entrypoint-initdb.d/
       - ./docker/mysql/data:/var/lib/mysql
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - "${PHP_PORT}:9000"
+    working_dir: /app
+
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./:/app
+      - ./docker/nginx:/var/log/nginx
+      - ./docker/nginx/conf/site.conf:/etc/nginx/conf.d/default.conf
+
 ###< doctrine/doctrine-bundle ###
 
 volumes:

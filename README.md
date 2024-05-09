@@ -1,9 +1,4 @@
-# NOTAS SOBRE LAS ACTIVIDADES
-
-## Enunciado actividad 22.1
-- Cambios en panel comercial gestionados con workflow
-- Cambios en panel jefe de proyecto gestionados con workflow
-- Cambios en el estado de las tareas gestionados con workflow
+# BUDGET-MAKER
 
 # Comandos útiles para el proyecto
 ### Comando para levantar la infraestructura

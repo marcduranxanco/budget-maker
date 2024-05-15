@@ -4,8 +4,12 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    && docker-php-ext-install pdo_mysql
+    nodejs \
+    npm \
+    && docker-php-ext-install pdo_mysql \
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+RUN composer install
 
 WORKDIR /app

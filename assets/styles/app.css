@@ -10,7 +10,7 @@ body {
 
 header {
     padding: 15px;
-    background-color: #C82829;
+    background-color: #7cbaff;
     text-align: center;
     text-transform: uppercase;
 }
@@ -23,7 +23,7 @@ main {
 
 nav {
     display: flex;
-    flex-basis: row;
+    flex-basis: auto;
     background-color: #333;
     text-transform: uppercase;
 }
@@ -35,7 +35,7 @@ nav a {
 }
 
 nav a:hover {
-    color: #C82829;
+    color: #7cbaff;
 
 }
 
@@ -67,7 +67,7 @@ table a {
 /* END DATA STYLES */
 
 .flash-error {
-    background-color: #B0413E;
+    background-color: #7cbaff;
     color: white;
     padding: 3px 0px;
     margin: 6px 0px;

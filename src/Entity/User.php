@@ -207,8 +207,8 @@ class User implements UserInterface
         return $this;
     }
 
-    public function __toString(): ?string
+    public function __toString(): string
     {
-        return $this->getEmail();
+        return $this->getEmail() ?? '';
     }
 }

@@ -6,10 +6,10 @@ RUN apt-get update && apt-get install -y \
     git \
     nodejs \
     npm \
-    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install pdo_mysql
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-RUN composer install
+# RUN composer install
 
 WORKDIR /app

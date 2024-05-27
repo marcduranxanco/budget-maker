@@ -1,7 +1,11 @@
 {% extends 'base/base.html.twig' %}
 
 {% block body %}
-    <h1>Edit Presupuesto</h1>
+    {% include 'base/common-elements/details_title.html.twig' with {
+        'title': 'Editar presupuesto',
+        'path': '',
+        'button_text': ''
+    } %}
 
     {{ include('presupuesto/_form.html.twig', {'button_label': 'Update'}) }}
 

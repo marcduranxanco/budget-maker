@@ -1,25 +1,43 @@
-<nav>
-    <a href="{{ path('index') }}">Home</a>
+<nav class="navbar navbar-expand-lg bg-dark">
+    <a class="navbar-brand brand" href="{{ path('index') }}">Bugdet Maker</a>
 
-    {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('app_user_index')}}">Admin</a>
-    {% endif %}
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_user_index')}}">Admin</a>
+                </li>
+            {% endif %}
 
-    {% if is_granted('ROLE_COMERCIAL') %}
-        <a href="{{ path('app_presupuesto_index') }}">Comercial</a>
-    {% endif %}
+            {% if is_granted('ROLE_COMERCIAL') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_presupuesto_index') }}">Comercial</a>
+                </li>
+            {% endif %}
 
-    {% if is_granted('ROLE_JEFEPROYECTO') %}
-        <a href="{{ path('app_proyecto_index') }}">Jefe Proyecto</a>
-    {% endif %}
+            {% if is_granted('ROLE_JEFEPROYECTO') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_proyecto_index') }}">Jefe Proyecto</a>
+                </li>
+            {% endif %}
 
-    {% if is_granted('ROLE_EMPLEADO') %}
-        <a href="{{ path('app_tarea_index') }}">Empleado</a>
-    {% endif %}
+            {% if is_granted('ROLE_EMPLEADO') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_tarea_index') }}">Empleado</a>
+                </li>
+            {% endif %}
+        </ul>
 
-    {% if app.user %}
-        <a href="{{ path('app_logout') }}">Logout</a>
-    {% else %}
-        <a href="{{ path('app_login') }}">Login</a>
-    {% endif %}
+        <ul class="navbar-nav ml-auto">
+            {% if app.user %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
 </nav>

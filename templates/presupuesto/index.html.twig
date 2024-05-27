@@ -1,7 +1,11 @@
 {% extends 'base/base.html.twig' %}
 
 {% block body %}
-    <h1>Presupuestos</h1>
+    {% include 'base/common-elements/details_title.html.twig' with {
+        'title': 'Presupuestos',
+        'path': path('app_presupuesto_new'),
+        'button_text': 'Crear presupuesto'
+    } %}
 
     <table class="table">
         <thead>
@@ -9,7 +13,9 @@
                 <th>Id</th>
                 <th>Tipo</th>
                 <th>Estado</th>
-                <th>Precio_final</th>
+                <th>Precio final</th>
+                <th>Descripción Cliente</th>
+                <th>Contacto</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +26,8 @@
                 <td>{{ presupuesto.tipo }}</td>
                 <td>{{ presupuesto.estado }}</td>
                 <td>{{ presupuesto.precioFinal }}</td>
+                <td>{{ presupuesto.descripcionProyecto }}</td>
+                <td>{{ presupuesto.correoContacto }}</td>
                 <td>
                     <a href="{{ path('app_presupuesto_show', {'id': presupuesto.id}) }}">show</a>
                     <a href="{{ path('app_presupuesto_edit', {'id': presupuesto.id}) }}">edit</a>
@@ -33,5 +41,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_presupuesto_new') }}">Create new</a>
 {% endblock %}

@@ -1,7 +1,11 @@
 {% extends 'base/base.html.twig' %}
 
 {% block body %}
-    <h1>Proyecto index</h1>
+    {% include 'base/common-elements/details_title.html.twig' with {
+        'title': 'Proyectos',
+        'path': path('app_proyecto_new'),
+        'button_text': 'Crear proyecto'
+    } %}
 
     <table class="table">
         <thead>
@@ -30,6 +34,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_proyecto_new') }}">Create new</a>
 {% endblock %}

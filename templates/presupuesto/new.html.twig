@@ -1,12 +1,19 @@
 {% extends 'base/base.html.twig' %}
 
 {% block body %}
-    <h1>Create new Presupuesto</h1>
+    {% include 'base/common-elements/details_title.html.twig' with {
+        'title': 'Solicitar un presupuesto',
+        'path': '',
+        'button_text': ''
+    } %}
+
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <button class="btn btn-sm btn-outline-secondary">
+            <a href="{{ path('app_presupuesto_index') }}">Volver al listado</a>
+        </button>
+    {% endif %}
 
     {{ include('presupuesto/_form.html.twig') }}
 
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    <a href="{{ path('app_presupuesto_index') }}">back to list</a>
-    {% endif %}
 
 {% endblock %}

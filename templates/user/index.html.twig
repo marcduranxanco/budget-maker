@@ -27,8 +27,8 @@
                 <td>{{ user.phone }}</td>
                 <td>{{ user.locale }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-secondary mr-2">show</a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-secondary mr-2">edit</a>
                 </td>
             </tr>
         {% else %}

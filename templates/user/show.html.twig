@@ -1,7 +1,9 @@
 {% extends 'base/base.html.twig' %}
 
 {% block body %}
-    <h1>User</h1>
+    {% include 'base/common-elements/details_title.html.twig' with {
+        'title': 'Detalle usuario: ' ~ user.email
+    } %}
 
     <table class="table">
         <tbody>
@@ -32,9 +34,11 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <div class="d-flex flex-row align-items-center mb-3">
+        <a href="{{ path('app_user_index') }}" class="btn btn-secondary mr-2">{{ 'Back to the list' | trans }}</a>
+        <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-primary mr-2">{{ 'Edit' | trans }}</a>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+        {{ include('user/_delete_form.html.twig' ) }}
+    </div>
 
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

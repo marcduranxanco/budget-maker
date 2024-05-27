@@ -5,25 +5,25 @@
         <ul class="navbar-nav mr-auto">
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_user_index')}}">Admin</a>
+                    <a class="nav-link" href="{{ path('app_user_index')}}">Usuarios</a>
                 </li>
             {% endif %}
 
             {% if is_granted('ROLE_COMERCIAL') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_presupuesto_index') }}">Comercial</a>
+                    <a class="nav-link" href="{{ path('app_presupuesto_index') }}">Panel Comercial</a>
                 </li>
             {% endif %}
 
             {% if is_granted('ROLE_JEFEPROYECTO') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_proyecto_index') }}">Jefe Proyecto</a>
+                    <a class="nav-link" href="{{ path('app_proyecto_index') }}">Proyectos</a>
                 </li>
             {% endif %}
 
             {% if is_granted('ROLE_EMPLEADO') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_tarea_index') }}">Empleado</a>
+                    <a class="nav-link" href="{{ path('app_tarea_index') }}">Tareas</a>
                 </li>
             {% endif %}
         </ul>

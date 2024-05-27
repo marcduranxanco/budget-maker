@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -18,6 +19,11 @@ class User implements UserInterface
         'Comercial' => 'ROLE_COMERCIAL',
         'Jefeproyecto' => 'ROLE_JEFEPROYECTO',
         'empleado' => 'ROLE_EMPLEADO'
+    ];
+
+    public const LOCALE = [
+        'Español' => 'ES',
+        'Inglés' => 'EN',
     ];
 
     /**
@@ -43,7 +49,8 @@ class User implements UserInterface
     private $phone;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('ES', 'EN')")
+     * @ORM\Column(type="string", length=2)
+     * @Assert\Regex(pattern="/^(ES|EN)$/i",message="Choose a valid locale.")
      */
     private $locale;
 

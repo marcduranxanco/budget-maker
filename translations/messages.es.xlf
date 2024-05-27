@@ -34,6 +34,14 @@
                 <source>Delete</source>
                 <target>Eliminar</target>
             </trans-unit>
+            <trans-unit id="8">
+                <source>Phone</source>
+                <target>Teléfono</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Show</source>
+                <target>Mostrar</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

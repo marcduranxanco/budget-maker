@@ -1,7 +1,12 @@
 <div class="card mt-5">
     <div class="card-body">
-        <h5 class="card-title text-center">Lorem Ipsum</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.</p>
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="text-center">
+                <p>Estás a punto de crear un nuevo presupuesto.</p>
+                <p>El procedimiento estándar incluye la validación de los datos y avanzar paso a paso hasta la creación del proyecto.</p>
+                <p>En cada paso del proceso, serás informado por correo electrónico.</p>
+            </div>
+        {% endif %}
 
         {{ form_start(form) }}
             {{ form_widget(form) }}

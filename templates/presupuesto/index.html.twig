@@ -29,13 +29,13 @@
                 <td>{{ presupuesto.descripcionProyecto }}</td>
                 <td>{{ presupuesto.correoContacto }}</td>
                 <td>
-                    <a href="{{ path('app_presupuesto_show', {'id': presupuesto.id}) }}">show</a>
-                    <a href="{{ path('app_presupuesto_edit', {'id': presupuesto.id}) }}">edit</a>
+                    <a href="{{ path('app_presupuesto_show', {'id': presupuesto.id}) }}" class="btn btn-secondary mr-2">{{ "Show" | trans }}</a>
+                    <a href="{{ path('app_presupuesto_edit', {'id': presupuesto.id}) }}" class="btn btn-secondary mr-2">{{ "Edit" | trans }}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">No records found</td>
             </tr>
         {% endfor %}
         </tbody>

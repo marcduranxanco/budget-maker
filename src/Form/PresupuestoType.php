@@ -28,8 +28,9 @@ class PresupuestoType extends AbstractType
 
             if(null !== $presupuesto->getId()) {
                 $form->add('estado', ChoiceType::class, [
-                'choices'  => Presupuesto::PRESUPUESTO_STATES
-                ]);
+                        'choices'  => Presupuesto::PRESUPUESTO_STATES,
+                        'label' => 'Status',
+                    ]);
             }
         });
     }

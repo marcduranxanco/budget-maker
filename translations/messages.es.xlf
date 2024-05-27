@@ -42,6 +42,10 @@
                 <source>Show</source>
                 <target>Mostrar</target>
             </trans-unit>
+            <trans-unit id="10">
+                <source>No records found</source>
+                <target>No se han encontrado registros</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

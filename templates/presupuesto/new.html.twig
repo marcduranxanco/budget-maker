@@ -7,13 +7,12 @@
         'button_text': ''
     } %}
 
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <button class="btn btn-sm btn-outline-secondary">
-            <a href="{{ path('app_presupuesto_index') }}">Volver al listado</a>
-        </button>
-    {% endif %}
-
     {{ include('presupuesto/_form.html.twig') }}
 
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <div class="d-flex flex-row align-items-center mt-3">
+            <a href="{{ path('app_presupuesto_index') }}" class="btn btn-secondary mr-2">Volver al listado</a>
+        </div>
+    {% endif %}
 
 {% endblock %}

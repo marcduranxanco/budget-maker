@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Presupuesto;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -16,7 +18,16 @@ class PresupuestoType extends AbstractType
     {
         $builder
             ->add('tipo', ChoiceType::class, [
+                'label' => 'Tipo de proyecto',
                 'choices'  => Presupuesto::PRESUPUESTO_TYPES
+            ])
+            ->add('correoContacto', EmailType::class, [
+                'label' => 'Correo de Contacto',
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('descripcionProyecto', TextareaType::class, [
+                'label' => 'Descripción del Proyecto',
+                'attr' => ['class' => 'form-control'],
             ])
             ->add('user')
         ;

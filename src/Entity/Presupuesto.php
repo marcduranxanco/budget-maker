@@ -55,6 +55,16 @@ class Presupuesto
      */
     private $proyecto;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $descripcionProyecto;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $correoContacto;
+
     public function __construct()
     {
         $this->estado = self::PRESUPUESTO_STATES['Pendiente'];
@@ -135,6 +145,30 @@ class Presupuesto
         }
 
         $this->proyecto = $proyecto;
+
+        return $this;
+    }
+
+    public function getDescripcionProyecto(): ?string
+    {
+        return $this->descripcionProyecto;
+    }
+
+    public function setDescripcionProyecto(string $descripcionProyecto): self
+    {
+        $this->descripcionProyecto = $descripcionProyecto;
+
+        return $this;
+    }
+
+    public function getCorreoContacto(): ?string
+    {
+        return $this->correoContacto;
+    }
+
+    public function setCorreoContacto(string $correoContacto): self
+    {
+        $this->correoContacto = $correoContacto;
 
         return $this;
     }

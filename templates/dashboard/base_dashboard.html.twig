@@ -1,5 +1,38 @@
 {% extends 'base/base.html.twig' %}
 
 {% block body %}
-    <h1>Bienvenido al panel {{ panel_type }}</h1>
+    {% include 'base/common-elements/details_title.html.twig' with {
+        'title': 'Bienvenido al panel de ' ~ panel_type,
+    } %}
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header">Card 1</div>
+                    <div class="card-body">
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac augue non erat accumsan feugiat.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header">Card 2</div>
+                    <div class="card-body">
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac augue non erat accumsan feugiat.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header">Card 3</div>
+                    <div class="card-body">
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac augue non erat accumsan feugiat.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

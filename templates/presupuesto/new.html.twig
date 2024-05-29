@@ -15,4 +15,9 @@
         </div>
     {% endif %}
 
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('js_presupuesto') }}
+    {% endblock %}
+
 {% endblock %}

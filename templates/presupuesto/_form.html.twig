@@ -10,7 +10,22 @@
 
         {{ form_start(form) }}
             {{ form_widget(form) }}
-            <button type="submit" class="btn btn-primary btn-block">{{ button_label|default('Save') }}</button>
+        <button type="button" class="btn btn-secondary btn-block" id="showPriceButton">Muestra el precio aproximado</button>
+        <button type="submit" class="btn btn-primary btn-block">{{ button_label|default('Save') }}</button>
         {{ form_end(form) }}
+
+        <!-- Card -->
+        <div class="card mt-3 mx-auto" id="priceCard">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Precio aproximado</h5>
+                <button type="button" class="close" id="closePriceCard" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted" id="priceCardField">Card subtitle</h6>
+                <p class="card-text" id="priceCardText">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
     </div>
 </div>

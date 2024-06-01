@@ -30,7 +30,7 @@
                 <td>{{ presupuesto.correoContacto }}</td>
                 <td>
                     <a href="{{ path('app_presupuesto_show', {'id': presupuesto.id}) }}" class="btn btn-secondary mr-2">{{ "Show" | trans }}</a>
-                    <a href="{{ path('app_presupuesto_edit', {'id': presupuesto.id}) }}" class="btn btn-secondary mr-2">{{ "Edit" | trans }}</a>
+                    <a href="{{ path('app_presupuesto_edit', {'id': presupuesto.id}) }}" class="btn btn-secondary mr-2 {{ presupuesto.estado == 'aprobado' ? 'disabled-link' : '' }}">{{ "Edit" | trans }}</a>
                 </td>
             </tr>
         {% else %}

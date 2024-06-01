@@ -10,3 +10,10 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
+
+
+$(document).ready(function() {
+    setTimeout(function() {
+        $(".flash-message").alert('close');
+    }, 5000);
+});

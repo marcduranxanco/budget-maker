@@ -10,23 +10,11 @@
     </head>
     <body>
         {% block navbar %} {{ include('base/common-elements/navbar.html.twig') }} {% endblock %}
+        {% block header %} {{ include('base/common-elements/header.html.twig') }} {% endblock %}
         {% block content %}
-            {% block header %} {{ include('base/common-elements/header.html.twig') }} {% endblock %}
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-12">
-
-                        {% for label, messages in app.flashes %}
-                            {% for message in messages %}
-                                <div class="alert alert-{{ label }} alert-dismissible fade show flash-message" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            {% endfor %}
-                        {% endfor %}
-
                     {% block body %}{% endblock %}
                     </div>
                 </div>

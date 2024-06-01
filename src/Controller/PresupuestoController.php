@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/presupuesto")
@@ -23,11 +24,17 @@ class PresupuestoController extends AbstractController
 {
     private EventDispatcherInterface $eventDispatcher;
     private EmailService $emailService;
+    private TranslatorInterface $translator;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, EmailService $emailService)
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        EmailService $emailService,
+        TranslatorInterface $translator
+    )
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->emailService = $emailService;
+        $this->translator = $translator;
     }
 
 
@@ -52,12 +59,17 @@ class PresupuestoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $presupuestoRepository->add($presupuesto);
 
-            $event = new PresupuestoSolicitadoEvent($presupuesto);
-            $this->eventDispatcher->dispatch($event, PresupuestoSolicitadoEvent::NAME);
+            try {
+                $presupuestoRepository->add($presupuesto);
+                $event = new PresupuestoSolicitadoEvent($presupuesto);
+                $this->eventDispatcher->dispatch($event, PresupuestoSolicitadoEvent::NAME);
+                $this->addFlash('success',$this->translator->trans('flash.success.create_budget'));
 
-            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+            }catch (\Exception $exception) {
+                $this->addFlash('danger',$this->translator->trans('flash.error.create_budget'));
+            }
         }
 
         return $this->renderForm('presupuesto/new.html.twig', [
@@ -87,15 +99,22 @@ class PresupuestoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $presupuestoRepository->add($presupuesto);
+            try {
+                $presupuestoRepository->add($presupuesto);
 
-            if($presupuesto->getEstado() === Presupuesto::PRESUPUESTO_STATES['Aprobado'])
-            {
-                $event = new PresupuestoAprobadoEvent($presupuesto);
-                $this->eventDispatcher->dispatch($event, PresupuestoAprobadoEvent::NAME);
+                if($presupuesto->getEstado() === Presupuesto::PRESUPUESTO_STATES['Aprobado'])
+                {
+                    $event = new PresupuestoAprobadoEvent($presupuesto);
+                    $this->eventDispatcher->dispatch($event, PresupuestoAprobadoEvent::NAME);
+                }
+
+                $this->addFlash('success',$this->translator->trans('flash.edit_budget.success'));
+                return $this->redirectToRoute('app_presupuesto_index', [], Response::HTTP_SEE_OTHER);
+
             }
-
-            return $this->redirectToRoute('app_presupuesto_index', [], Response::HTTP_SEE_OTHER);
+            catch (\Exception $ex) {
+                $this->addFlash('danger',$this->translator->trans('flash.edit_budget.error'));
+            }
         }
 
         return $this->renderForm('presupuesto/edit.html.twig', [
@@ -113,6 +132,8 @@ class PresupuestoController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$presupuesto->getId(), $request->request->get('_token'))) {
             $presupuestoRepository->remove($presupuesto);
         }
+
+        $this->addFlash('success',$this->translator->trans('flash.delete_budget.success'));
 
         return $this->redirectToRoute('app_presupuesto_index', [], Response::HTTP_SEE_OTHER);
     }

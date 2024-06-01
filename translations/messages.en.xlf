@@ -1,70 +1,69 @@
-<?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="0">
                 <source>Login</source>
-                <target>Accede al sistema</target>
+                <target>Access the system</target>
             </trans-unit>
             <trans-unit id="1">
                 <source>Email</source>
-                <target>Correo electrónico</target>
+                <target>Email</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>Password</source>
-                <target>Contraseña</target>
+                <target>Password</target>
             </trans-unit>
             <trans-unit id="3">
                 <source>Sing in</source>
-                <target>Accede</target>
+                <target>Sign in</target>
             </trans-unit>
             <trans-unit id="4">
                 <source>My application</source>
-                <target>Mi aplicación</target>
+                <target>My application</target>
             </trans-unit>
             <trans-unit id="5">
                 <source>Back to the list</source>
-                <target>Volver al listado</target>
+                <target>Back to the list</target>
             </trans-unit>
             <trans-unit id="6">
                 <source>Edit</source>
-                <target>Editar</target>
+                <target>Edit</target>
             </trans-unit>
             <trans-unit id="7">
                 <source>Delete</source>
-                <target>Eliminar</target>
+                <target>Delete</target>
             </trans-unit>
             <trans-unit id="8">
                 <source>Phone</source>
-                <target>Teléfono</target>
+                <target>Phone</target>
             </trans-unit>
             <trans-unit id="9">
                 <source>Show</source>
-                <target>Mostrar</target>
+                <target>Show</target>
             </trans-unit>
             <trans-unit id="no_records_found">
                 <source>no_records_found</source>
-                <target>No se han encontrado registros</target>
+                <target>No records found</target>
             </trans-unit>
             <trans-unit id="flash.new_budget.success">
                 <source>flash.create_budget.success</source>
-                <target>¡Se ha creado su solicitud de presupuesto!</target>
+                <target>Your budget request has been created!</target>
             </trans-unit>
             <trans-unit id="flash.new_budget.error">
                 <source>flash.create_budget.success</source>
-                <target>Ocurrió un error son su solicitud de presupuesto</target>
+                <target>An error occurred with your budget request</target>
             </trans-unit>
             <trans-unit id="flash.edit_budget.success">
                 <source>flash.edit_budget.success</source>
-                <target>El presupuesto se ha modificado</target>
+                <target>The budget has been modified</target>
             </trans-unit>
             <trans-unit id="flash.edit_budget.error">
                 <source>flash.edit_budget.error</source>
-                <target>Ocurrió un error procesando el presupuesto</target>
+                <target>An error occurred processing the budget</target>
             </trans-unit>
             <trans-unit id="flash.delete_budget.success">
                 <source>flash.delete_budget.success</source>
-                <target>Se eliminó el presupuesto</target>
+                <target>The budget was deleted</target>
             </trans-unit>
         </body>
     </file>

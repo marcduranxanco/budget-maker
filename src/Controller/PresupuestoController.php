@@ -92,7 +92,6 @@ class PresupuestoController extends AbstractController
             if($presupuesto->getEstado() === Presupuesto::PRESUPUESTO_STATES['Aprobado'])
             {
                 $event = new PresupuestoAprobadoEvent($presupuesto);
-                $this->eventDispatcher->addSubscriber(new PresupuestoEventSubscriber($this->emailService));
                 $this->eventDispatcher->dispatch($event, PresupuestoAprobadoEvent::NAME);
             }
 

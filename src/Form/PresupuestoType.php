@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Presupuesto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -42,6 +43,9 @@ class PresupuestoType extends AbstractType
                         'choices'  => Presupuesto::PRESUPUESTO_STATES,
                         'label' => 'Status',
                     ]);
+                $form->add('precio_final', NumberType::class, [
+                    'label' => 'Precio Final',
+                ]);
             }
         });
     }

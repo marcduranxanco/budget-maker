@@ -95,16 +95,16 @@ class EmailService
     {
         $subject = 'Su presupuesto ha cambiado de estado!';
         $body = 'Le informamos que su presupuesto con id '.$presupuesto->getId().' ha cambiado de estado a '.$presupuesto->getEstado();
-        $this->sendEmail($presupuesto->getUser(), $subject, $body);
+        $this->sendEmail([$presupuesto->getCorreoContacto()], $subject, $body);
     }
 
     private function enviarCorreoPresupuestoAprobadoJefeDeProyecto(Presupuesto $presupuesto)
     {
         $subject = 'El presupuesto '.$presupuesto->getId().' ha sido aprobado';
         $body = 'Le informamos que su presupuesto con id '.$presupuesto->getId().' ha cambiado de estado a '.$presupuesto->getEstado();
-        $jefesProyecto = $this->userRepository->findByRole(User::ROLES['Comercial']);
+        $mailsJefeProyecto = $this->userRepository->findMailsByRole(User::ROLES['Jefeproyecto']);
 
-        $this->sendEmail($jefesProyecto, $subject, $body);
+        $this->sendEmail($mailsJefeProyecto, $subject, $body);
     }
 
     /**

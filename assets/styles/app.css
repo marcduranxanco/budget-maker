@@ -95,3 +95,11 @@ td {
     padding: 3px 0px;
     margin: 6px 0px;
 }
+
+/* MISC*/
+#presupuesto_user {
+    display: none;
+}
+#presupuesto_user ~ .form-group.row {
+    display: none;
+}

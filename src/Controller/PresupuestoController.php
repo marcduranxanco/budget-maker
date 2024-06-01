@@ -55,7 +55,6 @@ class PresupuestoController extends AbstractController
             $presupuestoRepository->add($presupuesto);
 
             $event = new PresupuestoSolicitadoEvent($presupuesto);
-            $this->eventDispatcher->addSubscriber(new PresupuestoEventSubscriber($this->emailService));
             $this->eventDispatcher->dispatch($event, PresupuestoSolicitadoEvent::NAME);
 
             return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);

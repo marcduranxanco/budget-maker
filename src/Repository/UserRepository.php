@@ -71,6 +71,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ->getResult();
     }
 
+    public function findMailsByRole(string $role): array
+    {
+        $users = $this->findByRole($role);
+
+        $emails = array_map(function ($user) {
+            return $user->getEmail();
+        }, $users);
+
+        return $emails;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

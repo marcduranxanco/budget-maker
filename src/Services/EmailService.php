@@ -36,7 +36,7 @@ class EmailService
 
         /** @var User $receiver */
         foreach($mailTo as $receiver){
-            $email->addTo($receiver->getEmail());
+            $email->addTo($receiver);
         }
 
         $this->mailer->send($email);
@@ -62,18 +62,18 @@ class EmailService
     private function enviarCorreosSolicitudPresupuestoAComerciales(Presupuesto $presupuesto): void
     {
         $subject = 'Nuevo presupuesto creado '. $presupuesto->getId();
-        $body = 'Se ha creado un nuevo presupuesto: '.$presupuesto->getId().'. Contacto: '.$presupuesto->getUser()->getEmail();
+        $body = 'Se ha creado un nuevo presupuesto: '.$presupuesto->getId().'. Contacto: '.$presupuesto->getCorreoContacto();
 
-        $comerciales = $this->userRepository->findByRole(User::ROLES['Comercial']);
+        $mailsComerciales = $this->userRepository->findMailsByRole(User::ROLES['Comercial']);
 
-        $this->sendEmail($comerciales, $subject, $body);
+        $this->sendEmail($mailsComerciales, $subject, $body);
     }
 
     private function enviarCorreosSolicitudPresupuestoASolicitante(Presupuesto $presupuesto): void
     {
         $subject = 'Confirmación del presupuesto '. $presupuesto->getId();
         $body = 'Le confirmamos que su presupuesto con id '.$presupuesto->getId().' se ha procesado correctamente.';
-        $this->sendEmail([$presupuesto->getUser()], $subject, $body);
+        $this->sendEmail([$presupuesto->getCorreoContacto()], $subject, $body);
     }
 
     /**

@@ -66,6 +66,18 @@
                 <source>flash.delete_budget.success</source>
                 <target>Se eliminó el presupuesto</target>
             </trans-unit>
+            <trans-unit id="landing.button.ask_budget">
+                <source>landing.button.ask_budget</source>
+                <target>Pide tu presupuesto</target>
+            </trans-unit>
+            <trans-unit id="landing.main_text">
+                <source>landing.main_text</source>
+                <target>Solicita tu presupuesto sin compromiso. Nuestro equipo de trabajo lo evaluará y diseñará un proyecto según tus necesidades.</target>
+            </trans-unit>
+            <trans-unit id="brand.budget_maker">
+                <source>brand.budget_maker</source>
+                <target>Budget Maker</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

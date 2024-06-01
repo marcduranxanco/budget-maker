@@ -1,4 +1,4 @@
-{% extends 'base/base.html.twig' %}
+{% extends 'presupuesto/base_presupuesto.html.twig' %}
 
 {% block body %}
     {% include 'base/common-elements/details_title.html.twig' with {
@@ -14,10 +14,5 @@
             <a href="{{ path('app_presupuesto_index') }}" class="btn btn-secondary mr-2">Volver al listado</a>
         </div>
     {% endif %}
-
-    {% block javascripts %}
-        {{ parent() }}
-        {{ encore_entry_script_tags('js_presupuesto') }}
-    {% endblock %}
 
 {% endblock %}
